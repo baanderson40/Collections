@@ -1,6 +1,6 @@
 <Project Sdk="Dalamud.NET.Sdk/15.0.0">
     <PropertyGroup>
-        <Version>1.0.3.1</Version>
+        <Version>1.0.3.2</Version>
         <Description>Collections</Description>
         <TargetFramework>net10.0-windows</TargetFramework>
         <Platforms>x64</Platforms>
@@ -98,7 +98,7 @@
     <ItemGroup>
         <PackageReference Include="CSVFile" Version="3.2.1" />
         <PackageReference Include="CsvHelper" Version="30.0.1" />
-        <PackageReference Include="LuminaSupplemental.Excel" Version="4.2.2" />
+        <PackageReference Include="LuminaSupplemental.Excel" Version="4.3.1" />
         
         <Reference Include="Newtonsoft.Json">
             <HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
