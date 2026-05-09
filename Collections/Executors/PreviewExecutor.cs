@@ -7,7 +7,7 @@ namespace Collections;
 public unsafe class PreviewExecutor
 {
     private HashSet<EquipSlot> previewHistory = new();
-    private static Character* Character = (Character*)Services.ClientState.LocalPlayer.Address;
+    private static Character* Character = (Character*)Services.ObjectTable.LocalPlayer.Address;
 
     public static bool IsInGPose()
     {
@@ -161,7 +161,7 @@ public unsafe class PreviewExecutor
     private void PreviewWeapon(EquipSlot equipSlot, WeaponModelId weaponModelId)
     {
         var weaponSlot = EquipSlotConverter.EquipSlotToWeaponSlot(equipSlot);
-        Character->DrawData.LoadWeapon(weaponSlot, weaponModelId, 0, 0, 0, 0);
+        Character->DrawData.LoadWeapon(weaponSlot, weaponModelId, 0, 0, 0, 0, false);
     }
 
     private EquipmentModelId GetEquipmentModelId(Item item, byte stain0Id, byte? stain1Id)

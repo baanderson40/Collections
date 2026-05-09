@@ -16,9 +16,9 @@ public class GlamourCollectible : Collectible<Item>, ICreateable<GlamourCollecti
             (c) => {
                 if(c.Item1 is GlamourCollectible)
                 {
-                    bool exclude = (c.Item1 as GlamourCollectible).ExcelRow.EquipRestriction > 1 && 
+                    bool exclude = (c.Item1 as GlamourCollectible).ExcelRow.EquipRestriction.RowId > 1 &&
                     // Modulus of the equip restriction gives if it's exclusive to male or female
-                    (c.Item1 as GlamourCollectible).ExcelRow.EquipRestriction % 2 == (c.Item2 < 100 ? c.Item2 % 2 : c.Item2 - 102);
+                    (c.Item1 as GlamourCollectible).ExcelRow.EquipRestriction.RowId % 2 == (c.Item2 < 100 ? c.Item2 % 2 : c.Item2 - 102);
                     // Flip result if going male/female only
                     if(c.Item2 > 100) exclude = !exclude;
                     return exclude;

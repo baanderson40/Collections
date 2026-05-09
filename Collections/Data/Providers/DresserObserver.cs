@@ -89,7 +89,7 @@ public unsafe class DresserObserver
         var cabinetSheet = ExcelCache<Lumina.Excel.Sheets.Cabinet>.GetSheet();
         foreach (var cabinet in cabinetSheet)
         {
-            if (Cabinet.IsItemInCabinet((int)cabinet.RowId))
+            if (Cabinet.IsItemInCabinet(cabinet.RowId))
             {
                 var itemId = (uint)Services.ItemFinder.ItemIdFromCabinetId(cabinet.RowId);
                 ArmoireItemIds.Add(itemId);

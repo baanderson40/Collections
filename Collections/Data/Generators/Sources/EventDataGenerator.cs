@@ -49,7 +49,7 @@ public class EventDataGenerator : BaseDataGenerator<string>
         {
             if (quest.Id.ToString().StartsWith(entry.Key))
             {
-                return ExcelCache<FittingShopCategory>.GetSheet().GetRow(entry.Value).GetValueOrDefault().Unknown0.ToString() ?? fallback;
+                return ExcelCache<FittingShopCategory>.GetSheet().GetRow(entry.Value).GetValueOrDefault().Name.ToString() ?? fallback;
             }
         }
         // try lookup as armoire sub category (harder)

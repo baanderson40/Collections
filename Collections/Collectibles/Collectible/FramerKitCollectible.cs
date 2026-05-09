@@ -42,9 +42,7 @@ public class FramerKitCollectible : Collectible<BannerCondition>, ICreateable<Fr
         var misc = ExcelCache<CharaCardDecoration>.GetSheet().Where(row => row.UnlockCondition.RowId == excelRow.RowId).ToList();
         foreach(var decal in misc)
         {
-            // TODO: Uncomment once my dev environment can actually build with the proper label for the new EXDSheets
-            // switch(decal.Component)
-            switch(decal.Unknown2)
+            switch(decal.Component)
             {
                 case 1:
                     PlateBacking = decal.RowId;

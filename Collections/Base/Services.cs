@@ -7,6 +7,7 @@ public class Services
 {
     [PluginService] public static IDalamudPluginInterface PluginInterface { get; private set; }
     [PluginService] public static IClientState ClientState { get; private set; }
+    [PluginService] public static IObjectTable ObjectTable { get; private set; }
     [PluginService] public static IUnlockState UnlockState { get; private set; }
     [PluginService] public static IPlayerState PlayerState { get; private set; }
     [PluginService] public static ICommandManager CommandManager { get; private set; }

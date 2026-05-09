@@ -29,7 +29,7 @@ public class MogStationDataGenerator : BaseDataGenerator<uint>
         {
             foreach (var subRow in FittingShopCategoryItem)
             {
-                var itemId = Convert.ToUInt32(subRow.Unknown0);
+                var itemId = subRow.Item.RowId;
                 AddEntry(itemId, 0);
             }
         }
