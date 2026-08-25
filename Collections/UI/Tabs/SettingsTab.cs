@@ -119,6 +119,56 @@ public class SettingsTab : IDrawable
             ImGui.EndChild();
         }
 
+        if (ImGui.BeginChild("hidden-items-section", new Vector2(300, 225), false))
+        {
+            if (ImGui.CollapsingHeader("Hidden items"))
+            {
+                var collections = Services.DataProvider.GetCollections();
+                var hiddenItems = Services.Configuration.HiddenItems
+                    .OrderBy(entry => entry.Key)
+                    .Select(entry => (CollectionName: entry.Key, ItemIds: entry.Value.ToList()))
+                    .ToList();
+
+                if (ImGui.BeginChild("hidden-items-list", new Vector2(-1, 200), true))
+                {
+                    if (hiddenItems.Count == 0)
+                    {
+                        ImGui.TextDisabled("No hidden items");
+                    }
+                    else
+                    {
+                        foreach (var (collectionName, itemIds) in hiddenItems)
+                        {
+                            ImGui.TextDisabled(collectionName);
+                            if (!collections.TryGetValue(collectionName, out var collection))
+                            {
+                                continue;
+                            }
+
+                            foreach (var itemId in itemIds)
+                            {
+                                var item = collection.FirstOrDefault(collectible => collectible.Id == itemId);
+                                var itemName = item is null ? $"Unknown item ({itemId})" : item.Name;
+                                if (ImGui.Selectable($"{itemName}##hidden-item-{collectionName}-{itemId}"))
+                                {
+                                    Services.Configuration.HiddenItems[collectionName].Remove(itemId);
+                                    if (Services.Configuration.HiddenItems[collectionName].Count == 0)
+                                    {
+                                        Services.Configuration.HiddenItems.Remove(collectionName);
+                                    }
+                                    Services.Configuration.Save();
+                                }
+                            }
+                        }
+                    }
+
+                    ImGui.EndChild();
+                }
+            }
+
+            ImGui.EndChild();
+        }
+
     }
 
     public void OnOpen()

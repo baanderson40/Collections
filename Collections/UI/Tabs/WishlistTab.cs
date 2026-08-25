@@ -29,7 +29,8 @@ public class WishlistTab : IDrawable
 
     private void LoadCollectibles()
     {
-        collections = Services.DataProvider.GetCollections().Values.Aggregate((full, c) => [..full, ..c]).Where(c => c.IsWishlist()).ToList();
+        collections = Services.DataProvider.GetCollections().Values.Aggregate((full, c) => [..full, ..c])
+            .Where(c => c.IsWishlist() && !c.IsHidden()).ToList();
     }
 
     public void OnPublish(FilterChangeEventArgs args)

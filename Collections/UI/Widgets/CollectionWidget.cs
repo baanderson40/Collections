@@ -381,6 +381,11 @@ public class CollectionWidget
 
     public bool IsFiltered(ICollectible collectible)
     {
+        if (collectible.IsHidden())
+        {
+            return true;
+        }
+
         // Search filter
         if (searchFilter != "")
         {

@@ -13,6 +13,8 @@ public interface ICollectible
     public void SetFavorite(bool favorite);
     public bool IsWishlist();
     public void SetWishlist(bool wishlist);
+    public bool IsHidden();
+    public void SetHidden(bool hidden);
     public void OpenGamerEscape();
     public bool GetIsObtained();
     public void UpdateObtainedState();

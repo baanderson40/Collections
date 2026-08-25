@@ -22,6 +22,7 @@ public class Configuration : IPluginConfiguration
     // Use a green border to indicate obtained items instead of displaying a checkmark
     public bool HighVisibilityObtained = false;
     public HashSet<string> HiddenTabs = new();
+    public Dictionary<string, HashSet<uint>> HiddenItems = new();
 
     public void Save()
     {

@@ -99,6 +99,15 @@ public class TooltipWidget
             }
             ImGui.SameLine();
 
+            // Hide item from every collection view.
+            var isHidden = collectible.IsHidden();
+            if (UiHelper.IconButtonStateful("hidden-button", FontAwesomeIcon.EyeSlash, ref isHidden, ColorsPalette.GREY2, ColorsPalette.YELLOW, isHidden ? "Hidden" : "Hide item"))
+            {
+                collectible.SetHidden(isHidden);
+                EventService.Publish<FilterChangeEvent, FilterChangeEventArgs>(new FilterChangeEventArgs());
+            }
+            ImGui.SameLine();
+
             // Favorite
             var isFavorite = collectible.IsFavorite();
             if (UiHelper.IconButtonStateful("favourite-button", FontAwesomeIcon.Star, ref isFavorite, ColorsPalette.GREY2, ColorsPalette.YELLOW, isFavorite ? "Favorite" : "Add to Favorite"))

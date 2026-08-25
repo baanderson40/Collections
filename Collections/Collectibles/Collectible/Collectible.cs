@@ -178,6 +178,37 @@ public abstract class Collectible<T> : ICollectible where T : struct, IExcelRow<
         Services.Configuration.Save();
     }
 
+    public bool IsHidden()
+    {
+        return Services.Configuration.HiddenItems.TryGetValue(GetCollectionName(), out var hiddenItems)
+            && hiddenItems.Contains(Id);
+    }
+
+    public void SetHidden(bool hidden)
+    {
+        var collectionName = GetCollectionName();
+        if (!Services.Configuration.HiddenItems.TryGetValue(collectionName, out var hiddenItems))
+        {
+            hiddenItems = new HashSet<uint>();
+            Services.Configuration.HiddenItems[collectionName] = hiddenItems;
+        }
+
+        if (hidden)
+        {
+            hiddenItems.Add(Id);
+        }
+        else
+        {
+            hiddenItems.Remove(Id);
+            if (hiddenItems.Count == 0)
+            {
+                Services.Configuration.HiddenItems.Remove(collectionName);
+            }
+        }
+
+        Services.Configuration.Save();
+    }
+
     public ISharedImmediateTexture GetIcon()
     {
         return IconHandler.GetIcon();
