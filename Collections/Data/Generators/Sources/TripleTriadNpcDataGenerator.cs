@@ -10,7 +10,9 @@ public class TripleTriadNpcDataGenerator : BaseDataGenerator<ENpcResident>
             {
                 if (tripleTriadCardResident.Acquisition.RowId != 0)
                 {
-                    AddEntry(tripleTriadCardResident.RowId, ExcelCache<ENpcResident>.GetSheet().GetRow(tripleTriadCardResident.Acquisition.RowId).Value);
+                    var npc = ExcelCache<ENpcResident>.GetSheet().GetRow(tripleTriadCardResident.Acquisition.RowId);
+                    if (npc is not null)
+                        AddEntry(tripleTriadCardResident.RowId, npc.Value);
                 }
             }
         }

@@ -35,11 +35,11 @@ public class ContentFiltersWidget
 
     private int columns { get; init; }
     private EventService EventService { get; init; }
-    public ContentFiltersWidget(EventService eventService, int columns = 1, List<ICollectible> collection = null)
+    public ContentFiltersWidget(EventService eventService, int columns = 1, List<ICollectible>? collection = null)
     {
         EventService = eventService;
         this.columns = columns;
-        FilterAvailableContentTypes(collection);
+            FilterAvailableContentTypes(collection);
         InitializeDefaultFiltersState();
         LoadIcons();
     }
@@ -113,13 +113,13 @@ public class ContentFiltersWidget
         }
     }
 
-    private void FilterAvailableContentTypes(List<ICollectible> collection)
+    private void FilterAvailableContentTypes(List<ICollectible>? collection)
     {
         if (collection != null)
         {
             var sourceTypes = collection.Where(c => c.CollectibleKey != null).SelectMany(c => c.CollectibleKey.SourceCategories).ToHashSet();
 
-            foreach (var (sourceType, iconId) in contentTypesToIconId)
+            foreach (var sourceType in contentTypesToIconId.Keys.ToList())
             {
                 if (!sourceTypes.Contains(sourceType))
                 {

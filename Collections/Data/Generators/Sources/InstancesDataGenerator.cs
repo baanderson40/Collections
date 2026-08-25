@@ -7,7 +7,7 @@ public class InstancesDataGenerator : BaseDataGenerator<ContentFinderCondition>
 {
     public Dictionary<uint, List<uint>> contentFinderConditionToItems = new(); // TODO deprecate
 
-    private ExcelCache<ContentFinderCondition> contentFinderConditionList { get; set; }
+    private ExcelCache<ContentFinderCondition> contentFinderConditionList { get; set; } = null!;
 
     protected override void InitializeData()
     {

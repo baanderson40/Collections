@@ -11,7 +11,7 @@ public class NpcSource : CollectibleSource
 
     public override string GetName()
     {
-        return eNpcResident.Value.Singular.ToString();
+        return eNpcResident!.Value.Singular.ToString();
     }
 
     private List<SourceCategory> sourceType = new();
@@ -35,8 +35,8 @@ public class NpcSource : CollectibleSource
     }
 
     private bool locationChecked = false;
-    private Location locationEntry;
-    public Location GetLocationEntry()
+    private Location? locationEntry;
+    public Location? GetLocationEntry()
     {
         if (locationChecked)
         {
@@ -65,6 +65,6 @@ public class NpcSource : CollectibleSource
 
     public override NpcSource Clone()
     {
-        return new NpcSource(eNpcResident.Value);
+        return new NpcSource(eNpcResident!.Value);
     }
 }

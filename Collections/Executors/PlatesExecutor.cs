@@ -44,8 +44,10 @@ public unsafe class PlatesExecutor
                     {
                         Dev.Log($"Armoire not loaded, not applying {item.Name} ({item.RowId}) to plate");
                     }
-                    var cabinetId = (int)Services.ItemFinder.CabinetIdFromItemId(item.RowId);
-                    SetPlateItem(PlateItemSource.Armoire, cabinetId, item.RowId, stain0Id, stain1Id);
+                    var cabinetId = Services.ItemFinder.CabinetIdFromItemId(item.RowId);
+                    if (cabinetId is null)
+                        return;
+                    SetPlateItem(PlateItemSource.Armoire, (int)cabinetId.Value, item.RowId, stain0Id, stain1Id);
                 }
 
                 else

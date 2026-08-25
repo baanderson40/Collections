@@ -27,7 +27,7 @@ public class ShopSource : CollectibleSource
         this.ShopId = shopId;
     }
 
-    private string name;
+    private string? name;
     public override string GetName()
     {
         if (name != null)
@@ -64,7 +64,7 @@ public class ShopSource : CollectibleSource
         return name;
     }
 
-    private List<SourceCategory> sourceCategories;
+    private List<SourceCategory>? sourceCategories;
     public override List<SourceCategory> GetSourceCategories()
     {
         if (sourceCategories != null)
@@ -103,8 +103,8 @@ public class ShopSource : CollectibleSource
     }
 
     private bool locationChecked = false;
-    private Location locationEntry;
-    public Location GetLocationEntry()
+    private Location? locationEntry;
+    public Location? GetLocationEntry()
     {
         if (locationChecked)
         {

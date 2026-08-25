@@ -7,15 +7,15 @@ public class ShopsDataGenerator : BaseDataGenerator<Shop>
 {
     private Dictionary<uint, uint> NpcDataToNpcBase { get; set; } = new();
 
-    private ExcelCache<Item> ItemSheet { get; set; }
-    private ExcelCache<ENpcBase> ENpcBaseSheet { get; set; }
-    private ExcelCache<SpecialShop> SpecialShopEntitySheet { get; set; }
-    private ExcelCache<CustomTalk> CustomTalkSheet { get; set; }
-    private ExcelSubRowCache<CustomTalkNestHandlers> CustomTalkNestHandlersSheet { get; set; }
-    private ExcelCache<InclusionShop> InclusionShopSheet { get; set; }
-    private ExcelSubRowCache<InclusionShopSeries> InclusionShopSeriesSheet { get; set; }
-    private ExcelCache<TopicSelect> TopicSelectSheet { get; set; }
-    private ExcelCache<PreHandler> PreHandlerSheet { get; set; }
+    private ExcelCache<Item> ItemSheet { get; set; } = null!;
+    private ExcelCache<ENpcBase> ENpcBaseSheet { get; set; } = null!;
+    private ExcelCache<SpecialShop> SpecialShopEntitySheet { get; set; } = null!;
+    private ExcelCache<CustomTalk> CustomTalkSheet { get; set; } = null!;
+    private ExcelSubRowCache<CustomTalkNestHandlers> CustomTalkNestHandlersSheet { get; set; } = null!;
+    private ExcelCache<InclusionShop> InclusionShopSheet { get; set; } = null!;
+    private ExcelSubRowCache<InclusionShopSeries> InclusionShopSeriesSheet { get; set; } = null!;
+    private ExcelCache<TopicSelect> TopicSelectSheet { get; set; } = null!;
+    private ExcelCache<PreHandler> PreHandlerSheet { get; set; } = null!;
 
     protected override void InitializeData()
     {

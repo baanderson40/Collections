@@ -37,7 +37,6 @@ public class TooltipWidget
 
             if (dyeSlots > 0)
             {
-                var _ = true;
                 ImGui.SetCursorPos(origPos + new Vector2(UiHelper.ScaleForFontSize(iconSize) - ImGui.GetFontSize(), 0) * .98f);
                 ImGui.SetItemAllowOverlap();
                 ImGui.PushStyleColor(ImGuiCol.Text, ColorsPalette.BLACK);
@@ -201,7 +200,8 @@ public class TooltipWidget
                             ImGui.SameLine();
                         }
                         var npcName = shopSource.ENpcResident != null ? shopSource.ENpcResident.Value.Singular.ToString() : "Unknown NPC";
-                        var locationName = shopSource.GetLocationEntry() != null ? shopSource.GetLocationEntry().TerritoryType.PlaceName.Value.Name.ToString() : "Unknown Location";
+                        var location = shopSource.GetLocationEntry();
+                        var locationName = location is not null ? location.TerritoryType.PlaceName.Value.Name.ToString() : "Unknown Location";
                         ImGui.AlignTextToFramePadding();
                         ImGui.Text("at " + npcName + ", " + locationName);
                     }
@@ -262,6 +262,7 @@ public class TooltipWidget
         if (collectible is null)
         {
             ImGui.Text(" ");
+            return;
         }
 
         if (collectible.PrimaryHint.Description != string.Empty)

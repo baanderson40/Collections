@@ -5,7 +5,7 @@ namespace Collections;
 
 public class FashionAccessoriesCollectible: Collectible<Ornament>, ICreateable<FashionAccessoriesCollectible, Ornament>
 {
-    public new static string CollectionName => "Fashion Accessories";
+    public static string CollectionName => "Fashion Accessories";
 
     public FashionAccessoriesCollectible(Ornament excelRow) : base(excelRow)
     {
@@ -35,9 +35,9 @@ public class FashionAccessoriesCollectible: Collectible<Ornament>, ICreateable<F
     {
         // trying to use the underlying unlock item for fashion accessories, as the unlock description is cooler.
         if(CollectibleKey != null)
-            return ExcelCache<Item>.GetSheet().GetRow(CollectibleKey.Id).Value.Description.ToString();
+            return ExcelCache<Item>.GetSheet().GetRow(CollectibleKey.Id)!.Value.Description.ToString();
         
-        return ExcelCache<OrnamentTransient>.GetSheet().GetRow(ExcelRow.RowId).Value.Text.ToString() ?? "";
+        return ExcelCache<OrnamentTransient>.GetSheet().GetRow(ExcelRow.RowId)!.Value.Text.ToString();
     }
 
     public override void UpdateObtainedState()

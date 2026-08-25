@@ -5,7 +5,7 @@ namespace Collections;
 
 public class Dev
 {
-    public static void Log(string message = null, int frames = 1, [CallerMemberName] string caller = "", [CallerFilePath] string file = "")
+    public static void Log(string? message = null, int frames = 1, [CallerMemberName] string caller = "", [CallerFilePath] string file = "")
     {
         var logMessage = "";
         if (frames == 1)
@@ -16,8 +16,8 @@ public class Dev
         else
         {
             var frame = new StackFrame(frames, true);
-            var callingFile = StripDirectoryPath(frame.GetFileName());
-            logMessage = callingFile + "->" + frame.GetMethod().Name;
+            var callingFile = StripDirectoryPath(frame.GetFileName() ?? "");
+            logMessage = callingFile + "->" + (frame.GetMethod()?.Name ?? "unknown");
         }
 
         if (message != null)

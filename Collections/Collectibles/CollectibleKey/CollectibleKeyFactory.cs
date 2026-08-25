@@ -67,7 +67,7 @@ public class CollectibleKeyFactory
             return CollectibleKeyCache<TripleTriadNpcKey, ENpcResident>.Instance.GetObject((npc, (int)id));
         }
 
-        return null;
+        return null!;
     }
 }
 

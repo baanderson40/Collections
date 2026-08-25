@@ -161,7 +161,8 @@ public class ItemKey : CollectibleKey<(Item, int)>, ICreateable<ItemKey, (Item, 
             Task.Run(async () =>
             {
                 await Services.UniversalisClient.populateMarketBoardData(Input.Item1.RowId, homeWorld);
-                var price = Services.UniversalisClient.itemToMarketplaceData[Input.Item1.RowId].minPriceWorld;
+                Services.UniversalisClient.itemToMarketplaceData.TryGetValue(Input.Item1.RowId, out var marketplaceData);
+                var price = marketplaceData?.minPriceWorld;
                 if (price != null)
                 {
                     marketBoardPrice = (int)price;

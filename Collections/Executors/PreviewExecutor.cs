@@ -7,7 +7,7 @@ namespace Collections;
 public unsafe class PreviewExecutor
 {
     private HashSet<EquipSlot> previewHistory = new();
-    private static Character* Character = (Character*)Services.ObjectTable.LocalPlayer.Address;
+    private static Character* Character => (Character*)Services.ObjectTable.LocalPlayer!.Address;
 
     public static bool IsInGPose()
     {
@@ -46,11 +46,11 @@ public unsafe class PreviewExecutor
         {
             var invSlot = InventoryManager.Instance()->GetInventorySlot(InventoryType.EquippedItems, EquipSlotConverter.EquipSlotToInventorySlot(equipSlot));
             var item = ExcelCache<Item>.GetSheet().GetRow(invSlot->GlamourId != 0 ? invSlot->GlamourId : invSlot->ItemId);
-            TryOn(item.Value.RowId, (byte)stain0Id, (byte)stain1Id);
+            TryOn(item!.Value.RowId, (byte)stain0Id, (byte)stain1Id);
         }
         else
         {
-            if (EquipSlotConverter.EquipSlotToWeaponSlot(equipSlot) != DrawDataContainer.WeaponSlot.Unk)
+            if (equipSlot == EquipSlot.MainHand || equipSlot == EquipSlot.OffHand)
             {
                 var weapon = Character->DrawData.Weapon(EquipSlotConverter.EquipSlotToWeaponSlot(equipSlot)).ModelId;
                 PreviewWeapon(equipSlot, GetWeaponModelId(weapon, (byte)stain0Id, (byte)stain1Id));
@@ -105,7 +105,7 @@ public unsafe class PreviewExecutor
         {
             var invSlot = container->GetInventorySlot(i);
             var item = itemSheet.GetRow(invSlot->GlamourId != 0 ? invSlot->GlamourId : invSlot->ItemId);
-            if (previewHistory.Contains(item.Value.GetEquipSlot()))
+            if (item is not null && previewHistory.Contains(item.Value.GetEquipSlot()))
                 Preview(item.Value, invSlot->Stains[0], invSlot->Stains[1], false);
         }
         previewHistory.Clear();

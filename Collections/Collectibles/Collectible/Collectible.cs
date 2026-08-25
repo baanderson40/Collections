@@ -25,7 +25,7 @@ public abstract class Collectible<T> : ICollectible where T : struct, IExcelRow<
         return;
     }
 
-    public ICollectibleKey CollectibleKey { get; init; }
+    public ICollectibleKey CollectibleKey { get; init; } = null!;
     public T ExcelRow { get; set; }
     protected IconHandler IconHandler { get; init; }
     protected List<CollectibleSortOption> SortOptions = [

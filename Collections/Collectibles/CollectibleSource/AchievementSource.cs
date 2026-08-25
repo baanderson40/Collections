@@ -15,7 +15,7 @@ public class AchievementSource : CollectibleSource
         return Achievement.Name.ToString() + ": " + Achievement.Description.ToString();
     }
 
-    private List<SourceCategory> sourceType;
+    private List<SourceCategory> sourceType = null!;
     public override List<SourceCategory> GetSourceCategories()
     {
         if (sourceType != null)

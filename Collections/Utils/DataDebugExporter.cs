@@ -20,7 +20,7 @@ public class DataDebugExporter
         Dev.Log($"{name}: Keys Missing: {size - keysLocated}/{size}, Sources Missing: {size - sourcesLocated}/{size}, Avg Sources: {(float)sourcesCount / size}");
     }
 
-    public static void ExportCollectionsData(List<Type> collectionFilters = null)
+    public static void ExportCollectionsData(List<Type>? collectionFilters = null)
     {
         var collections = Services.DataProvider.collections;
         var filteredCollections = collectionFilters is not null ? collections.Where(k => collectionFilters.Contains(k.Key)) : collections;
@@ -109,7 +109,7 @@ public class DataDebugExporter
         };
     }
 
-    public static CollectibleKeyData GetCollectibleKeyData(ICollectibleKey collectibleKey)
+    public static CollectibleKeyData? GetCollectibleKeyData(ICollectibleKey? collectibleKey)
     {
         if (collectibleKey is null)
             return null;
@@ -122,7 +122,7 @@ public class DataDebugExporter
         };
     }
 
-    public static List<CollectibleSourceData> GetCollectibleSourcesData(ICollectibleKey collectibleKey)
+    public static List<CollectibleSourceData>? GetCollectibleSourcesData(ICollectibleKey? collectibleKey)
     {
         if (collectibleKey is null)
             return null;
@@ -131,12 +131,13 @@ public class DataDebugExporter
         var data = new List<CollectibleSourceData>();
         foreach (var source in sources)
         {
-            var isShop = source is ShopSource;
+            var shopSourceMatch = source as ShopSource;
+            var isShop = shopSourceMatch is not null;
             ShopSource? shopSource = null;
             ENpcResident? npc = null;
-            if (isShop)
+            if (shopSourceMatch is not null)
             {
-                shopSource = (ShopSource)source;
+                shopSource = shopSourceMatch;
                 npc = shopSource.ENpcResident;
             }
 
@@ -144,7 +145,7 @@ public class DataDebugExporter
             var Type = source.GetType().Name;
             uint? NpcId = npc is not null ? npc.Value.RowId : null;
             var NpcName = npc is not null ? npc.Value.Singular.ToString() : "";
-            uint? ShopId = isShop ? shopSource.ShopId : null;
+            uint? ShopId = shopSource?.ShopId;
             var LocationNotFound = isShop && !source.GetIslocatable();
             var NpcNotFound = isShop && npc is null;
 
@@ -233,49 +234,49 @@ public class DataDebugExporter
 
     public class CollectibleFlattenedData
     {
-        public string CollectionName { get; set; }
+        public string CollectionName { get; set; } = null!;
         public uint Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         public uint KeyId { get; set; }
-        public string KeyName { get; set; }
-        public string KeyType { get; set; }
-        public string SourceName { get; set; }
-        public string SourceType { get; set; }
+        public string KeyName { get; set; } = null!;
+        public string KeyType { get; set; } = null!;
+        public string SourceName { get; set; } = null!;
+        public string SourceType { get; set; } = null!;
         public uint? ShopId { get; set; }
         public uint? NpcId { get; set; }
-        public string NpcName { get; set; }
+        public string NpcName { get; set; } = null!;
         public bool NpcNotFound { get; set; }
         public bool LocationNotFound { get; set; }
     }
 
     public class CollectionData2
     {
-        public string CollectionName { get; set; }
-        public List<CollectibleData> CollectiblesData { get; set; }
+        public string CollectionName { get; set; } = null!;
+        public List<CollectibleData> CollectiblesData { get; set; } = new();
     }
 
     public class CollectibleData
     {
         public uint Id { get; set; }
-        public string Name { get; set; }
-        public CollectibleKeyData CollectibleKeyData { get; set; }
-        public List<CollectibleSourceData> CollectibleSourcesData { get; set; }
+        public string Name { get; set; } = null!;
+        public CollectibleKeyData? CollectibleKeyData { get; set; }
+        public List<CollectibleSourceData>? CollectibleSourcesData { get; set; }
     }
 
     public class CollectibleKeyData
     {
         public uint Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
+        public string Name { get; set; } = null!;
+        public string Type { get; set; } = null!;
     }
 
     public class CollectibleSourceData
     {
-        public string Name { get; set; }
-        public string Type { get; set; }
+        public string Name { get; set; } = null!;
+        public string Type { get; set; } = null!;
         public uint? ShopId { get; set; }
         public uint? NpcId { get; set; }
-        public string NpcName { get; set; }
+        public string NpcName { get; set; } = null!;
         public bool NpcNotFound { get; set; }
         public bool LocationNotFound { get; set; }
     }
@@ -283,13 +284,13 @@ public class DataDebugExporter
     public class ShopData
     {
         public uint npcId { get; set; }
-        public string npcName { get; set; }
+        public string npcName { get; set; } = null!;
         public bool validNpc { get; set; }
         public bool locatableNpc { get; set; }
         public uint shopId { get; set; }
         public uint itemId { get; set; }
-        public string itemName { get; set; }
-        public string costDescription { get; set; }
+        public string itemName { get; set; } = null!;
+        public string costDescription { get; set; } = null!;
     }
 }
 

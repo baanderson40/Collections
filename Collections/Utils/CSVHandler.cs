@@ -39,9 +39,9 @@ public static class CSVHandler
 
 public class ItemIdToSource
 {
-    public string Collection { get; set; }
+    public string Collection { get; set; } = null!;
     public uint ItemId { get; set; }
     public uint SourceId { get; set; }
-    public string SourceDescription { get; set; }
+    public string SourceDescription { get; set; } = null!;
 }
 

@@ -5,12 +5,11 @@ namespace Collections;
 
 public class GlamourTreeWidget
 {
-    private GlamourSet currentGlamourSet;
+    private GlamourSet currentGlamourSet = null!;
     private GlamourTree glamourTree = new();
     private int glamourPlateIcon = 000125;
     private int copyExamineIcon = 060642;
     private Vector2 iconSize = new(21, 21);
-    private bool collapsed = false;
 
     private EventService EventService { get; init; }
     public GlamourTreeWidget(EventService eventService)
@@ -101,7 +100,10 @@ public class GlamourTreeWidget
 
             //ImGui.ImageButton(icon.Handle, iconSize);
             //UiHelper.InputText("examine-button", isInspecting ? CopyInspectTargetToGlamourSet : null);
-            UiHelper.IconButtonWithPopUpInputText(FontAwesomeIcon.ArrowCircleDown, isInspecting ? CopyInspectTargetToGlamourSet : null);
+            if (isInspecting)
+                UiHelper.IconButtonWithPopUpInputText(FontAwesomeIcon.ArrowCircleDown, CopyInspectTargetToGlamourSet);
+            else
+                UiHelper.IconButtonWithPopUpInputText(FontAwesomeIcon.ArrowCircleDown, _ => { });
 
             if (!isInspecting)
                 ImGui.PopStyleColor();

@@ -3,7 +3,7 @@ namespace Collections;
 public abstract class Event<T> where T : EventArgs
 {
     public delegate void Delegate(T eventArgs);
-    public event Delegate OnPublish;
+    public event Delegate? OnPublish;
 
     public void Publish(T eventArgs)
     {

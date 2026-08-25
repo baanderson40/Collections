@@ -2,18 +2,18 @@ namespace Collections;
 
 public class SourcesDataGenerator
 {
-    public ShopsDataGenerator ShopsDataGenerator { get; private set; }
-    public InstancesDataGenerator InstancesDataGenerator { get; private set; }
-    public EventDataGenerator EventDataGenerator { get; private set; }
-    public MogStationDataGenerator MogStationDataGenerator { get; private set; }
-    public ContainersDataGenerator ContainersDataGenerator { get; private set; }
-    public AchievementsDataGenerator AchievementsDataGenerator { get; private set; }
-    public PvPSeriesDataGenerator PvPDataGenerator { get; private set; }
-    public QuestsDataGenerator QuestsDataGenerator { get; private set; }
-    public CraftingDataGenerator CraftingDataGenerator { get; private set; }
-    public TripleTriadNpcDataGenerator TripleTriadNpcDataGenerator { get; private set; }
-    public TripleTriadNpcBattleDataGenerator TripleTriadNpcBattleDataGenerator { get; private set; }
-    public SubmarineDataGenerator SubmarineDataGenerator {get; private set; }
+    public ShopsDataGenerator ShopsDataGenerator { get; private set; } = null!;
+    public InstancesDataGenerator InstancesDataGenerator { get; private set; } = null!;
+    public EventDataGenerator EventDataGenerator { get; private set; } = null!;
+    public MogStationDataGenerator MogStationDataGenerator { get; private set; } = null!;
+    public ContainersDataGenerator ContainersDataGenerator { get; private set; } = null!;
+    public AchievementsDataGenerator AchievementsDataGenerator { get; private set; } = null!;
+    public PvPSeriesDataGenerator PvPDataGenerator { get; private set; } = null!;
+    public QuestsDataGenerator QuestsDataGenerator { get; private set; } = null!;
+    public CraftingDataGenerator CraftingDataGenerator { get; private set; } = null!;
+    public TripleTriadNpcDataGenerator TripleTriadNpcDataGenerator { get; private set; } = null!;
+    public TripleTriadNpcBattleDataGenerator TripleTriadNpcBattleDataGenerator { get; private set; } = null!;
+    public SubmarineDataGenerator SubmarineDataGenerator {get; private set; } = null!;
 
     public SourcesDataGenerator()
     {

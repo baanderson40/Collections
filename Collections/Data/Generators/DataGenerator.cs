@@ -2,10 +2,10 @@ namespace Collections;
 
 public class DataGenerator
 {
-    public NpcLocationDataGenerator NpcLocationDataGenerator { get; private set; }
-    public CurrencyDataGenerator CurrencyDataGenerator { get; private set; }
-    public KeysDataGenerator KeysDataGenerator { get; private set; }
-    public SourcesDataGenerator SourcesDataGenerator { get; private set; }
+    public NpcLocationDataGenerator NpcLocationDataGenerator { get; private set; } = null!;
+    public CurrencyDataGenerator CurrencyDataGenerator { get; private set; } = null!;
+    public KeysDataGenerator KeysDataGenerator { get; private set; } = null!;
+    public SourcesDataGenerator SourcesDataGenerator { get; private set; } = null!;
 
     public DataGenerator()
     {

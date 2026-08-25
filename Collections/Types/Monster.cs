@@ -2,8 +2,8 @@ namespace Collections;
 
 public class Monster
 {
-    public string name;
-    public string LocationDescription;
+    public string name = string.Empty;
+    public string LocationDescription = string.Empty;
     public uint? territoryId;
     public uint? dutyId;
     public float? X;

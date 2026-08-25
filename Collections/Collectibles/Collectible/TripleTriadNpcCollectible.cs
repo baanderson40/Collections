@@ -2,7 +2,7 @@ namespace Collections.Collectibles.Collectible
 {
     public class TripleTriadNpcCollectible : Collectible<Lumina.Excel.Sheets.ENpcResident>, ICreateable<TripleTriadNpcCollectible, Lumina.Excel.Sheets.ENpcResident>
     {
-        public new static string CollectionName => "Triad NPC";
+        public static string CollectionName => "Triad NPC";
 
         public TripleTriadNpcCollectible(ENpcResident excelRow) : base(excelRow)
         {

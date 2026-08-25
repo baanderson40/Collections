@@ -28,7 +28,7 @@ class EquipSlotConverter
         {
             case EquipSlot.MainHand: return WeaponSlot.MainHand;
             case EquipSlot.OffHand: return WeaponSlot.OffHand;
-            default: return WeaponSlot.Unk;
+            default: throw new ArgumentException($"EquipSlot {equipSlot} is not a weapon slot");
         }
     }
 

@@ -5,7 +5,7 @@ namespace Collections;
 
 public class OrchestrionCollectible : Collectible<Orchestrion>, ICreateable<OrchestrionCollectible, Orchestrion>
 {
-    public new static string CollectionName => "Orchestrions";
+    public static string CollectionName => "Orchestrions";
 
     public OrchestrionCollectible(Orchestrion excelRow) : base(excelRow)
     {

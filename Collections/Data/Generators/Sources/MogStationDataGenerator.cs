@@ -5,7 +5,6 @@ namespace Collections;
 
 public class MogStationDataGenerator : BaseDataGenerator<uint>
 {
-    private static readonly string FileName = "ItemIdToMogStation.csv";
     protected override void InitializeData()
     {
         // Based on LuminaSupplemental

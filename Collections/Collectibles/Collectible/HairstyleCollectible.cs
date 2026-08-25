@@ -4,7 +4,7 @@ namespace Collections;
 
 public class HairstyleCollectible : Collectible<CharaMakeCustomize>, ICreateable<HairstyleCollectible, CharaMakeCustomize>
 {
-    public new static string CollectionName => "Hairstyles";
+    public static string CollectionName => "Hairstyles";
 
     public HairstyleCollectible(CharaMakeCustomize excelRow) : base(excelRow)
     {

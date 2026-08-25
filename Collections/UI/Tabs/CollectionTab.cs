@@ -55,7 +55,7 @@ public class CollectionTab : IDrawable
         ApplyFilters();
     }
 
-    private List<ICollectible> filteredCollection { get; set; }
+    private List<ICollectible> filteredCollection { get; set; } = new();
     private void ApplyFilters()
     {
         var contentFilters = ContentFiltersWidget.Filters.Where(d => d.Value).Select(d => d.Key);

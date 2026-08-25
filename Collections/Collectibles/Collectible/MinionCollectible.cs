@@ -4,7 +4,7 @@ namespace Collections;
 
 public class MinionCollectible : Collectible<Companion>, ICreateable<MinionCollectible, Companion>
 {
-    public new static string CollectionName => "Minions";
+    public static string CollectionName => "Minions";
 
     public MinionCollectible(Companion excelRow) : base(excelRow)
     {

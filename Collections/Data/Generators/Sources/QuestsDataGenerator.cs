@@ -4,7 +4,6 @@ public class QuestsDataGenerator : BaseDataGenerator<Quest>
 {
     public readonly Dictionary<uint, Quest> EmoteToQuest = new(); // TODO connect
 
-    private static readonly string FileName = "ItemIdToQuest.csv";
 
     public static List<Item> GetQuestRewards(Quest quest)
     {
@@ -17,7 +16,7 @@ public class QuestsDataGenerator : BaseDataGenerator<Quest>
             {
                 Item? item = ExcelCache<Item>.GetSheet().GetRow(reward.RowId);
                 // we only care about counting items that unlock a collectible or are glam
-                if(item != null && item.HasValue && item.Value.ItemAction.RowId != 0 || item.Value.ItemSortCategory.RowId == 5)
+                if (item is not null && (item.Value.ItemAction.RowId != 0 || item.Value.ItemSortCategory.RowId == 5))
                     items.Add(item.Value);
             }
         }
@@ -48,7 +47,7 @@ public class QuestsDataGenerator : BaseDataGenerator<Quest>
                         EmoteToQuest[emoteId] = quest;
                         Item? item = ExcelCache<Item>.GetSheet().GetRow(reward.RowId);
                         // we only care about counting items that unlock a collectible or are glam
-                        if(item != null && item.HasValue && item.Value.ItemAction.Value.Action.RowId != 0 || item.Value.ItemSortCategory.RowId == 5)
+                        if (item is not null && (item.Value.ItemAction.Value.Action.RowId != 0 || item.Value.ItemSortCategory.RowId == 5))
                             items.Add(item.Value);
                     }
                 }

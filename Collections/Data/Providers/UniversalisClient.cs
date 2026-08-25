@@ -6,7 +6,7 @@ namespace Collections;
 
 public class UniversalisClient
 {
-    public Dictionary<uint, MarketplaceItemData> itemToMarketplaceData = new();
+    public Dictionary<uint, MarketplaceItemData?> itemToMarketplaceData = new();
     private const string Fields = "listings.pricePerUnit,averagePriceNQ,averagePriceHQ";
 
     private readonly HttpClient httpClient =
@@ -29,8 +29,17 @@ public class UniversalisClient
     }
     public async Task<MarketplaceItemData?> GetMarketBoardData(uint itemId, World? homeWorld)
     {
+        if (homeWorld is null || homeWorld.Value.DataCenter.ValueNullable is null)
+        {
+            return null;
+        }
+
         var worldData = await GetMarketBoardDataInternal(itemId, homeWorld.Value.Name.ToString());
-        var DCData = await GetMarketBoardDataInternal(itemId, homeWorld.Value.DataCenter.Value.Name.ToString());
+        var DCData = await GetMarketBoardDataInternal(itemId, homeWorld.Value.DataCenter.ValueNullable.Value.Name.ToString());
+        if (worldData is null || DCData is null)
+        {
+            return null;
+        }
         return ParseMarketplaceItemData(worldData, DCData);
     }
 
@@ -83,7 +92,7 @@ public class UniversalisClient
 
     private class UniversalisItemData
     {
-        public List<Listing> listings { get; set; }
+        public List<Listing> listings { get; set; } = new();
         public double averagePriceNQ { get; set; }
         public double averagePriceHQ { get; set; }
 

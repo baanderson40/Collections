@@ -2,7 +2,7 @@ namespace Collections;
 
 public class OutfitsCollectible : Collectible<Item>, ICreateable<OutfitsCollectible, Item>
 {
-    public new static string CollectionName => "Outfits";
+    public static string CollectionName => "Outfits";
 
     public OutfitsCollectible(Item excelRow) : base(excelRow)
     {
@@ -38,9 +38,10 @@ public class OutfitsCollectible : Collectible<Item>, ICreateable<OutfitsCollecti
     public override void DrawAdditionalTooltip()
     {
         var items = Services.ItemFinder.ItemIdsInOutfit(ExcelRow.RowId);
-        var collectibles = Services.DataProvider.GetCollection<GlamourCollectible>()?.Where(c => items.Contains(c.Id)).ToList();
+        var collectibles = Services.DataProvider.GetCollection<GlamourCollectible>()
+            .Where(c => items.Contains(c.Id)).ToList();
         var iconSize = UiHelper.ScaleForFontSize(50);
-        for(int i = 0; i < collectibles?.Count; i++)
+        for(int i = 0; i < collectibles.Count; i++)
         {
             var c = collectibles[i];
             var icon = c.GetIcon();
@@ -66,7 +67,11 @@ public class OutfitsCollectible : Collectible<Item>, ICreateable<OutfitsCollecti
     protected override HintModule GetSecondaryHint()
     {
         if (this.CollectibleKey == null) return base.GetSecondaryHint();
-        return new HintModule($"{(this.CollectibleKey as OutfitKey).FirstItem.ClassJobCategory.Value.Name}, Lv. {(this.CollectibleKey as OutfitKey).FirstItem.LevelEquip}", null);
+        if (this.CollectibleKey is not OutfitKey outfitKey)
+        {
+            return base.GetSecondaryHint();
+        }
+        return new HintModule($"{outfitKey.FirstItem.ClassJobCategory.Value.Name}, Lv. {outfitKey.FirstItem.LevelEquip}", null);
     }
 
     public override void UpdateObtainedState()
@@ -82,7 +87,7 @@ public class OutfitsCollectible : Collectible<Item>, ICreateable<OutfitsCollecti
     public int GetNumberOfDyeSlots()
     {
         if (this.CollectibleKey == null) return 0;
-        return (CollectibleKey as OutfitKey).FirstItem.DyeCount;
+        return (CollectibleKey as OutfitKey)?.FirstItem.DyeCount ?? 0;
     }
 
     public override void Interact()

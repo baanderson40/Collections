@@ -158,11 +158,15 @@ public class KeysDataGenerator
         {
             if (cond.UnlockType1 == 1 && cond.UnlockType2 == 2)
             {
-                AddCollectibleKeyEntry(collectibleIdToQuest, typeof(BannerCondition), cond.RowId, cond.UnlockCriteria1.First().GetValueOrDefault<Quest>().Value);
+                    var quest = cond.UnlockCriteria1.First().GetValueOrDefault<Quest>();
+                    if (quest is not null)
+                        AddCollectibleKeyEntry(collectibleIdToQuest, typeof(BannerCondition), cond.RowId, quest.Value);
             }
             else if (cond.UnlockType1 == 4)
             {
-                AddCollectibleKeyEntry(collectibleIdToInstance, typeof(BannerCondition), cond.RowId, cond.UnlockCriteria1.First().GetValueOrDefault<InstanceContent>().Value.ContentFinderCondition.Value);
+                var instance = cond.UnlockCriteria1.First().GetValueOrDefault<InstanceContent>();
+                if (instance is not null)
+                    AddCollectibleKeyEntry(collectibleIdToInstance, typeof(BannerCondition), cond.RowId, instance.Value.ContentFinderCondition.Value);
             }
             else if (cond.UnlockType1 == 11)
             {
@@ -205,8 +209,8 @@ public class KeysDataGenerator
 public class BlueSpell
 {
     public uint ActionId { get; set; }
-    public string MobDescription { get; set; }
-    public string LocationDescription { get; set; }
+    public string MobDescription { get; set; } = null!;
+    public string LocationDescription { get; set; } = null!;
     public uint? DutyId { get; set; }
     public uint? TerritoryId { get; set; }
     public float? X { get; set; }

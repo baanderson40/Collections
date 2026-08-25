@@ -5,32 +5,32 @@ namespace Collections;
 
 public class Services
 {
-    [PluginService] public static IDalamudPluginInterface PluginInterface { get; private set; }
-    [PluginService] public static IClientState ClientState { get; private set; }
-    [PluginService] public static IObjectTable ObjectTable { get; private set; }
-    [PluginService] public static IUnlockState UnlockState { get; private set; }
-    [PluginService] public static IPlayerState PlayerState { get; private set; }
-    [PluginService] public static ICommandManager CommandManager { get; private set; }
-    [PluginService] public static IDataManager DataManager { get; private set; }
-    [PluginService] public static IFramework Framework { get; private set; }
-    [PluginService] public static ITargetManager TargetManager { get; private set; }
-    [PluginService] public static IPluginLog PluginLog { get; private set; }
-    [PluginService] public static ITextureProvider TextureProvider { get; private set; }
-    [PluginService] public static IDutyState DutyState { get; private set; }
-    [PluginService] public static IAddonLifecycle AddonLifecycle { get; private set; }
-    [PluginService] public static ISigScanner SigScanner { get; private set; }
+    [PluginService] public static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
+    [PluginService] public static IClientState ClientState { get; private set; } = null!;
+    [PluginService] public static IObjectTable ObjectTable { get; private set; } = null!;
+    [PluginService] public static IUnlockState UnlockState { get; private set; } = null!;
+    [PluginService] public static IPlayerState PlayerState { get; private set; } = null!;
+    [PluginService] public static ICommandManager CommandManager { get; private set; } = null!;
+    [PluginService] public static IDataManager DataManager { get; private set; } = null!;
+    [PluginService] public static IFramework Framework { get; private set; } = null!;
+    [PluginService] public static ITargetManager TargetManager { get; private set; } = null!;
+    [PluginService] public static IPluginLog PluginLog { get; private set; } = null!;
+    [PluginService] public static ITextureProvider TextureProvider { get; private set; } = null!;
+    [PluginService] public static IDutyState DutyState { get; private set; } = null!;
+    [PluginService] public static IAddonLifecycle AddonLifecycle { get; private set; } = null!;
+    [PluginService] public static ISigScanner SigScanner { get; private set; } = null!;
 
-    public static Plugin Plugin { get; private set; }
-    public static Configuration Configuration { get; private set; }
-    public static CommandsInitializer CommandsInitializer { get; private set; }
-    public static WindowsInitializer WindowsInitializer { get; private set; }
-    public static DataGenerator DataGenerator { get; private set; }
-    public static UniversalisClient UniversalisClient { get; private set; }
-    public static DataProvider DataProvider { get; private set; }
-    public static LodestoneClient LodestoneClient { get; private set; }
-    public static DresserObserver DresserObserver { get; private set; }
-    public static ItemFinder ItemFinder { get; private set; }
-    public static PreviewExecutor PreviewExecutor { get; private set; }
+    public static Plugin Plugin { get; private set; } = null!;
+    public static Configuration Configuration { get; private set; } = null!;
+    public static CommandsInitializer CommandsInitializer { get; private set; } = null!;
+    public static WindowsInitializer WindowsInitializer { get; private set; } = null!;
+    public static DataGenerator DataGenerator { get; private set; } = null!;
+    public static UniversalisClient UniversalisClient { get; private set; } = null!;
+    public static DataProvider DataProvider { get; private set; } = null!;
+    public static LodestoneClient LodestoneClient { get; private set; } = null!;
+    public static DresserObserver DresserObserver { get; private set; } = null!;
+    public static ItemFinder ItemFinder { get; private set; } = null!;
+    public static PreviewExecutor PreviewExecutor { get; private set; } = null!;
 
     public Services(Plugin plugin)
     {

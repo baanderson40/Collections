@@ -5,7 +5,7 @@ namespace Collections;
 
 public class GlassesCollectible: Collectible<Glasses>, ICreateable<GlassesCollectible, Glasses>
 {
-    public new static string CollectionName => "Glasses";
+    public static string CollectionName => "Glasses";
 
     public GlassesCollectible(Glasses excelRow) : base(excelRow)
     {
@@ -35,7 +35,7 @@ public class GlassesCollectible: Collectible<Glasses>, ICreateable<GlassesCollec
     {
         // trying to use the underlying unlock item for glasses, as the unlock description is cooler.
         if(CollectibleKey != null)
-            return ExcelCache<Item>.GetSheet().GetRow(CollectibleKey.Id).Value.Description.ToString();
+            return ExcelCache<Item>.GetSheet().GetRow(CollectibleKey.Id)!.Value.Description.ToString();
         
         return ExcelRow.Description.ToString();
     }

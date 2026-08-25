@@ -183,7 +183,7 @@ public class Draw
         ImGui.SameLine();
         //}
 
-        var offsetTyped = (Vector2)offset;
+        var offsetTyped = offset ?? Vector2.Zero;
         ImGui.SetCursorPos(new Vector2(ImGui.GetCursorPos().X - offsetTyped.X, ImGui.GetCursorPos().Y - offsetTyped.Y));
         //}
 
@@ -211,7 +211,7 @@ public class Draw
     {
         //if (offset is not null)
         //{
-        ImGui.SetCursorPos((Vector2)previousPos);
+        ImGui.SetCursorPos(previousPos ?? ImGui.GetCursorPos());
         //}
 
         ImGui.PopStyleColor(styleStack.Count);

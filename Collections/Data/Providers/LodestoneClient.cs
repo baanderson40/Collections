@@ -7,7 +7,7 @@ namespace Collections;
 
 public class LodestoneClient
 {
-    public Dictionary<string, CollectionData> characterNameToCollectionData = new();
+    public Dictionary<string, CollectionData?> characterNameToCollectionData = new();
 
     private readonly HttpClient httpClient =
     new(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.All })
@@ -53,10 +53,15 @@ public class LodestoneClient
 
         var playerTarget = target as IPlayerCharacter;
 
-        return (playerTarget.Name.ToString(), playerTarget.HomeWorld.Value.Name.ToString());
+        if (playerTarget is null || playerTarget.HomeWorld.ValueNullable is null)
+        {
+            return null;
+        }
+
+        return (playerTarget.Name.ToString(), playerTarget.HomeWorld.ValueNullable.Value.Name.ToString());
     }
 
-    private async Task<CollectionData> GetCollectionData(string charName, string server)
+    private async Task<CollectionData?> GetCollectionData(string charName, string server)
     {
         var lodestoneId = await GetLodestoneId(charName, server);
         if (lodestoneId == null) return null;
@@ -82,6 +87,7 @@ public class LodestoneClient
             if (lodestoneCharacterSearch.Results == null)
             {
                 Dev.Log("Lodestone Id Result is null");
+                return null;
             }
 
             var firstResult = lodestoneCharacterSearch.Results.FirstOrDefault();
@@ -95,7 +101,7 @@ public class LodestoneClient
         }
     }
 
-    private async Task<CollectionData> GetCollectionDataFromId(int Id)
+    private async Task<CollectionData?> GetCollectionDataFromId(int Id)
     {
         try
         {
@@ -154,8 +160,8 @@ public class CollectionData
 public class Pagination
 {
     public int Page { get; set; }
-    public object PageNext { get; set; }
-    public object PagePrev { get; set; }
+    public object? PageNext { get; set; }
+    public object? PagePrev { get; set; }
     public int PageTotal { get; set; }
     public int Results { get; set; }
     public int ResultsPerPage { get; set; }
@@ -164,18 +170,18 @@ public class Pagination
 
 public class Result
 {
-    public string Avatar { get; set; }
+    public string Avatar { get; set; } = null!;
     public int FeastMatches { get; set; }
     public int ID { get; set; }
-    public string Lang { get; set; }
-    public string Name { get; set; }
-    public object Rank { get; set; }
-    public object RankIcon { get; set; }
-    public string Server { get; set; }
+    public string Lang { get; set; } = null!;
+    public string Name { get; set; } = null!;
+    public object? Rank { get; set; }
+    public object? RankIcon { get; set; }
+    public string Server { get; set; } = null!;
 }
 
 public class LodestoneCharacterSearch
 {
-    public Pagination Pagination { get; set; }
-    public List<Result> Results { get; set; }
+    public Pagination Pagination { get; set; } = null!;
+    public List<Result>? Results { get; set; }
 }

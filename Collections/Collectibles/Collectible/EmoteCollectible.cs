@@ -6,7 +6,7 @@ namespace Collections;
 
 public class EmoteCollectible : Collectible<Emote>, ICreateable<EmoteCollectible, Emote>
 {
-    public new static string CollectionName => "Emotes";
+    public static string CollectionName => "Emotes";
 
     public EmoteCollectible(Emote excelRow) : base(excelRow)
     {

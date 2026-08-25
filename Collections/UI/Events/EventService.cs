@@ -12,7 +12,7 @@ public class EventService
     {
         if (events.ContainsKey(typeof(T)))
         {
-            return events[typeof(T)]() as T;
+            return events[typeof(T)]() as T ?? throw new InvalidOperationException($"Event factory returned an invalid {typeof(T).Name}");
         }
 
         var presEvent = new T();

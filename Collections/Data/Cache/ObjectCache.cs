@@ -10,6 +10,7 @@ public interface ICreateable<TOut, TIn>
 public abstract class ObjectCache<TObjectCache, TObj, TInput, TKey>
     where TObj : ICreateable<TObj, TInput>
     where TObjectCache : new()
+    where TKey : notnull
 {
     private static TObjectCache? InternalInstance;
     public static TObjectCache Instance => InternalInstance ??= new TObjectCache();

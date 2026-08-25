@@ -13,7 +13,7 @@ public class EquipSlotsWidget
     private Vector4 paletteWidgetButtonDefaultColor = ColorsPalette.WHITE;
     private Vector2 brushIconRectSize = new(4, 4);
 
-    public GlamourSet currentGlamourSet { get; set; }
+    public GlamourSet currentGlamourSet { get; set; } = null!;
     private Dictionary<EquipSlot, bool> hoveredPaletteButton = new();
 
     private EventService EventService { get; init; }
@@ -51,8 +51,8 @@ public class EquipSlotsWidget
             EquipSlot equipSlot = Services.DataProvider.SupportedEquipSlots[i];
 
             // Load collectible if set
-            ISharedImmediateTexture icon = null;
-            GlamourCollectible collectible = null;
+            ISharedImmediateTexture? icon = null;
+            GlamourCollectible? collectible = null;
 
             var glamourItem = currentGlamourSet.GetItem(equipSlot);
             if (glamourItem is not null)

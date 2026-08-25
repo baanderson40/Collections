@@ -13,7 +13,7 @@ public static class Extensions
 
     public static string GetEnumName<T>(this T t) where T : struct, IConvertible
     {
-        return Enum.GetName(typeof(T), t);
+        return Enum.GetName(typeof(T), t) ?? string.Empty;
     }
 
     public static T GetEnumValue<T>(this string t) where T : struct
@@ -24,7 +24,9 @@ public static class Extensions
     // Reflection
     public static TReturn GetProperty<TReturn>(this object t, string property)
     {
-        return (TReturn)t.GetType().GetProperty(property).GetValue(t);
+        var propertyInfo = t.GetType().GetProperty(property)
+            ?? throw new ArgumentException($"Property '{property}' was not found on {t.GetType().Name}");
+        return (TReturn)propertyInfo.GetValue(t)!;
     }
 
     // Strings

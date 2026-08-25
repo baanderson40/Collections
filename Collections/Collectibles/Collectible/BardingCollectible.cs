@@ -4,7 +4,7 @@ namespace Collections;
 
 public class BardingCollectible : Collectible<BuddyEquip>, ICreateable<BardingCollectible, BuddyEquip>
 {
-    public new static string CollectionName => "Bardings";
+    public static string CollectionName => "Bardings";
 
     public BardingCollectible(BuddyEquip excelRow) : base(excelRow)
     {

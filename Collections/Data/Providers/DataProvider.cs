@@ -6,7 +6,7 @@ namespace Collections;
 public class DataProvider
 {
     public List<ClassJob> SupportedClassJobs = new();
-    public List<Stain> SupportedStains { get; set; }
+    public List<Stain> SupportedStains { get; set; } = new();
     public readonly List<EquipSlot> SupportedEquipSlots = new()
     {
         // ordered this way to draw them in 2 columns more efficiently

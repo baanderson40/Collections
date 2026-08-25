@@ -48,15 +48,19 @@ public class MonsterSource : CollectibleSource
         if (monster.dutyId is not null)
         {
             var contentFinderCondition = ExcelCache<ContentFinderCondition>.GetSheet().GetRow((uint)monster.dutyId);
-            var contentType = contentFinderCondition.Value.ContentType.Value;
-            return (int)contentType.Icon;
+            var contentType = contentFinderCondition!.Value.ContentType.ValueNullable;
+            if (contentType is null)
+            {
+                return defaultIconId;
+            }
+            return (int)contentType.Value.Icon;
         }
         return defaultIconId;
     }
 
     private bool locationChecked = false;
     private Location? location;
-    public Location GetLocationEntry()
+    public Location? GetLocationEntry()
     {
         if (locationChecked)
         {

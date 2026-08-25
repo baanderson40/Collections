@@ -4,7 +4,7 @@ namespace Collections;
 
 public class BlueMageCollectible : Collectible<Lumina.Excel.Sheets.Action>, ICreateable<BlueMageCollectible, Lumina.Excel.Sheets.Action>
 {
-    public new static string CollectionName => "Blue Mage";
+    public static string CollectionName => "Blue Mage";
 
     public BlueMageCollectible(Lumina.Excel.Sheets.Action excelRow) : base(excelRow)
     {

@@ -5,8 +5,8 @@ namespace Collections;
 
 public unsafe class DresserObserver
 {
-    public List<uint> DresserItemIds;
-    public List<uint> ArmoireItemIds;
+    public List<uint> DresserItemIds = null!;
+    public List<uint> ArmoireItemIds = null!;
 
     private static MirageManager* MirageManager => FFXIVClientStructs.FFXIV.Client.Game.MirageManager.Instance();
     private static FFXIVClientStructs.FFXIV.Client.Game.UI.Cabinet Cabinet => UIState.Instance()->Cabinet;
@@ -91,8 +91,9 @@ public unsafe class DresserObserver
         {
             if (Cabinet.IsItemInCabinet(cabinet.RowId))
             {
-                var itemId = (uint)Services.ItemFinder.ItemIdFromCabinetId(cabinet.RowId);
-                ArmoireItemIds.Add(itemId);
+                var itemId = Services.ItemFinder.ItemIdFromCabinetId(cabinet.RowId);
+                if (itemId is not null)
+                    ArmoireItemIds.Add(itemId.Value);
             }
         }
 

@@ -84,7 +84,7 @@ public unsafe class ItemFinder
     {
         return ItemIdsInOutfit(itemId)
             .Where(id => ExcelCache<Item>.GetSheet().GetRow(id).HasValue)
-            .Select(id => ExcelCache<Item>.GetSheet().GetRow(id).Value)
+            .Select(id => ExcelCache<Item>.GetSheet().GetRow(id)!.Value)
             .ToList();
     }
 

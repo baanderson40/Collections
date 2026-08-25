@@ -15,7 +15,7 @@ public class InstanceSource : CollectibleSource
         return ContentFinderConditionInternal.Name.ToString();
     }
 
-    private List<SourceCategory> sourceType;
+    private List<SourceCategory> sourceType = null!;
     public override List<SourceCategory> GetSourceCategories()
     {
         if (sourceType != null)
