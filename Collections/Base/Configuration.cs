@@ -21,6 +21,7 @@ public class Configuration : IPluginConfiguration
     public bool SeparatePreviewAndApply = false;
     // Use a green border to indicate obtained items instead of displaying a checkmark
     public bool HighVisibilityObtained = false;
+    public HashSet<string> HiddenTabs = new();
 
     public void Save()
     {

@@ -89,6 +89,36 @@ public class SettingsTab : IDrawable
         }
         ImGui.EndListBox();
 
+        if (ImGui.BeginChild("hidden-tabs-section", new Vector2(300, 125), false))
+        {
+            if (ImGui.CollapsingHeader("Hidden tabs"))
+            {
+                var hiddenTabs = Services.Configuration.HiddenTabs.OrderBy(name => name).ToList();
+                if (ImGui.BeginChild("hidden-tabs-list", new Vector2(-1, 100), true))
+                {
+                    if (hiddenTabs.Count == 0)
+                    {
+                        ImGui.TextDisabled("No hidden tabs");
+                    }
+                    else
+                    {
+                        foreach (var tabName in hiddenTabs)
+                        {
+                            if (ImGui.Selectable(tabName))
+                            {
+                                Services.Configuration.HiddenTabs.Remove(tabName);
+                                Services.Configuration.Save();
+                            }
+                        }
+                    }
+
+                    ImGui.EndChild();
+                }
+            }
+
+            ImGui.EndChild();
+        }
+
     }
 
     public void OnOpen()

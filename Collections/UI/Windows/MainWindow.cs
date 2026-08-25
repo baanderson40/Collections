@@ -38,6 +38,11 @@ public class MainWindow : Window, IDisposable
         {
             foreach (var (name, window) in tabs)
             {
+                if (name != "Settings" && Services.Configuration.HiddenTabs.Contains(name))
+                {
+                    continue;
+                }
+
                 // Use AutoSelectNewTabs to focus the forceOpenTab
                 if (forceOpenTab == name)
                 {
@@ -46,7 +51,17 @@ public class MainWindow : Window, IDisposable
                 }
 
                 // Tab item
-                if (ImGui.BeginTabItem($"{name}"))
+                var tabIsOpen = ImGui.BeginTabItem(name);
+                if (ImGui.BeginPopupContextItem($"tab-context##{name}"))
+                {
+                    if (ImGui.MenuItem("Hide tab"))
+                    {
+                        HideTab(name);
+                    }
+                    ImGui.EndPopup();
+                }
+
+                if (tabIsOpen)
                 {
                     // Run OnOpen when a new tab is selected
                     if (name != previousTabName)
@@ -85,8 +100,26 @@ public class MainWindow : Window, IDisposable
 
     public void OpenTab(string tabName)
     {
+        if (tabName != "Settings" && Services.Configuration.HiddenTabs.Contains(tabName))
+        {
+            IsOpen = true;
+            return;
+        }
+
         forceOpenTab = tabName;
         IsOpen = true;
+    }
+
+    private void HideTab(string tabName)
+    {
+        if (tabName == "Settings")
+        {
+            return;
+        }
+
+        Services.Configuration.HiddenTabs.Add(tabName);
+        Services.Configuration.Save();
+        previousTabName = string.Empty;
     }
 
     public unsafe void StoreOriginalColors()
