@@ -22,32 +22,57 @@ public class SettingsTab : IDrawable
     private bool highVisibilityObtained;
     private List<string> showAdditionalTooltips;
     private List<string> excludedCollectionsFromInstanceTab;
+    private string selectedSection = "General";
+
+    private static readonly string[] sections =
+    [
+        "General",
+        "Display",
+        "Instance tab",
+        "Hidden tabs",
+        "Hidden items",
+    ];
+
     public void Draw()
     {
-        if(ImGui.Checkbox("Separate Preview and Add to Equip Slot", ref separatePreviewAndApply))
+        ImGui.BeginChild("settings-section-list", new Vector2(170, 0), true);
+        foreach (var section in sections)
+        {
+            if (ImGui.Selectable(section, selectedSection == section, ImGuiSelectableFlags.SpanAllColumns))
+            {
+                selectedSection = section;
+            }
+        }
+        ImGui.EndChild();
+
+        ImGui.SameLine();
+        ImGui.BeginChild("settings-section-content", new Vector2(0, 0), true);
+        switch (selectedSection)
+        {
+            case "General":
+                DrawGeneralSettings();
+                break;
+            case "Instance tab":
+                DrawInstanceSettings();
+                break;
+            case "Display":
+                DrawDisplaySettings();
+                break;
+            case "Hidden tabs":
+                DrawHiddenTabs();
+                break;
+            case "Hidden items":
+                DrawHiddenItems();
+                break;
+        }
+        ImGui.EndChild();
+    }
+
+    private void DrawGeneralSettings()
+    {
+        if (ImGui.Checkbox("Separate Preview and Add to Equip Slot", ref separatePreviewAndApply))
         {
             Services.Configuration.SeparatePreviewAndApply = separatePreviewAndApply;
-            Services.Configuration.Save();
-        }
-        
-        if (ImGui.Checkbox("Auto open Instance tab when entering an instance", ref autoOpenInstanceTab))
-        {
-            Services.Configuration.AutoOpenInstanceTab = autoOpenInstanceTab;
-            Services.Configuration.Save();
-        }
-
-        // padding to signify this is a sub-option for auto-open
-        ImGui.InvisibleButton("padding", new Vector2(15, 1));
-        ImGui.SameLine();
-        if (ImGui.Checkbox("Only open Instance tab if there are uncollected items ", ref onlyOpenIfUncollected))
-        {
-            Services.Configuration.OnlyOpenIfUncollected = onlyOpenIfUncollected;
-            Services.Configuration.Save();
-        }
-
-        if (ImGui.Checkbox("Auto hide obtained items from Instance tab", ref autoHideObtainedFromInstanceTab))
-        {
-            Services.Configuration.AutoHideObtainedFromInstanceTab = autoHideObtainedFromInstanceTab;
             Services.Configuration.Save();
         }
 
@@ -56,25 +81,32 @@ public class SettingsTab : IDrawable
             Services.Configuration.HighVisibilityObtained = highVisibilityObtained;
             Services.Configuration.Save();
         }
+    }
 
-        ImGui.Text("Show additional item information for these collections");
-        ImGui.BeginListBox("##collection-box-add-tooltips", new Vector2(300, 200));
-        foreach (var collection in collectionNames)
+    private void DrawInstanceSettings()
+    {
+        if (ImGui.Checkbox("Auto open Instance tab when entering an instance", ref autoOpenInstanceTab))
         {
-            bool isShown = showAdditionalTooltips.Contains(collection);
-            if (ImGui.Checkbox($"{collection}", ref isShown))
-            {
-                if (isShown)
-                    showAdditionalTooltips.Add(collection);
-                else
-                    showAdditionalTooltips.Remove(collection);
-                Services.Configuration.Save();
-            }
+            Services.Configuration.AutoOpenInstanceTab = autoOpenInstanceTab;
+            Services.Configuration.Save();
         }
-        ImGui.EndListBox();
+
+        ImGui.Indent();
+        if (ImGui.Checkbox("Only open Instance tab if there are uncollected items", ref onlyOpenIfUncollected))
+        {
+            Services.Configuration.OnlyOpenIfUncollected = onlyOpenIfUncollected;
+            Services.Configuration.Save();
+        }
+        ImGui.Unindent();
+
+        if (ImGui.Checkbox("Auto hide obtained items from Instance tab", ref autoHideObtainedFromInstanceTab))
+        {
+            Services.Configuration.AutoHideObtainedFromInstanceTab = autoHideObtainedFromInstanceTab;
+            Services.Configuration.Save();
+        }
 
         ImGui.Text("Exclude these collections from the Instance tab");
-        ImGui.BeginListBox("##collection-box", new Vector2(300, 200));
+        ImGui.BeginChild("excluded-collections-list", new Vector2(-1, 0), true);
         foreach (var collection in collectionNames)
         {
             bool isExcluded = excludedCollectionsFromInstanceTab.Contains(collection);
@@ -87,88 +119,91 @@ public class SettingsTab : IDrawable
                 Services.Configuration.Save();
             }
         }
-        ImGui.EndListBox();
+        ImGui.EndChild();
+    }
 
-        if (ImGui.BeginChild("hidden-tabs-section", new Vector2(300, 125), false))
+    private void DrawDisplaySettings()
+    {
+        ImGui.Text("Show additional item information for these collections");
+        ImGui.BeginChild("additional-tooltips-list", new Vector2(-1, 0), true);
+        foreach (var collection in collectionNames)
         {
-            if (ImGui.CollapsingHeader("Hidden tabs"))
+            bool isShown = showAdditionalTooltips.Contains(collection);
+            if (ImGui.Checkbox($"{collection}", ref isShown))
             {
-                var hiddenTabs = Services.Configuration.HiddenTabs.OrderBy(name => name).ToList();
-                if (ImGui.BeginChild("hidden-tabs-list", new Vector2(-1, 100), true))
-                {
-                    if (hiddenTabs.Count == 0)
-                    {
-                        ImGui.TextDisabled("No hidden tabs");
-                    }
-                    else
-                    {
-                        foreach (var tabName in hiddenTabs)
-                        {
-                            if (ImGui.Selectable(tabName))
-                            {
-                                Services.Configuration.HiddenTabs.Remove(tabName);
-                                Services.Configuration.Save();
-                            }
-                        }
-                    }
+                if (isShown)
+                    showAdditionalTooltips.Add(collection);
+                else
+                    showAdditionalTooltips.Remove(collection);
+                Services.Configuration.Save();
+            }
+        }
+        ImGui.EndChild();
+    }
 
-                    ImGui.EndChild();
+    private void DrawHiddenTabs()
+    {
+        ImGui.Text("Hidden tabs");
+        ImGui.BeginChild("hidden-tabs-list", new Vector2(-1, 0), true);
+        var hiddenTabs = Services.Configuration.HiddenTabs.OrderBy(name => name).ToList();
+        if (hiddenTabs.Count == 0)
+        {
+            ImGui.TextDisabled("No hidden tabs");
+        }
+        else
+        {
+            foreach (var tabName in hiddenTabs)
+            {
+                if (ImGui.Selectable(tabName))
+                {
+                    Services.Configuration.HiddenTabs.Remove(tabName);
+                    Services.Configuration.Save();
                 }
             }
-
-            ImGui.EndChild();
         }
+        ImGui.EndChild();
+    }
 
-        if (ImGui.BeginChild("hidden-items-section", new Vector2(300, 225), false))
+    private void DrawHiddenItems()
+    {
+        ImGui.Text("Hidden items");
+        ImGui.BeginChild("hidden-items-list", new Vector2(-1, 0), true);
+        var collections = Services.DataProvider.GetCollections();
+        var hiddenItems = Services.Configuration.HiddenItems
+            .OrderBy(entry => entry.Key)
+            .Select(entry => (CollectionName: entry.Key, ItemIds: entry.Value.ToList()))
+            .ToList();
+        if (hiddenItems.Count == 0)
         {
-            if (ImGui.CollapsingHeader("Hidden items"))
+            ImGui.TextDisabled("No hidden items");
+        }
+        else
+        {
+            foreach (var (collectionName, itemIds) in hiddenItems)
             {
-                var collections = Services.DataProvider.GetCollections();
-                var hiddenItems = Services.Configuration.HiddenItems
-                    .OrderBy(entry => entry.Key)
-                    .Select(entry => (CollectionName: entry.Key, ItemIds: entry.Value.ToList()))
-                    .ToList();
-
-                if (ImGui.BeginChild("hidden-items-list", new Vector2(-1, 200), true))
+                ImGui.TextDisabled(collectionName);
+                if (!collections.TryGetValue(collectionName, out var collection))
                 {
-                    if (hiddenItems.Count == 0)
+                    continue;
+                }
+
+                foreach (var itemId in itemIds)
+                {
+                    var item = collection.FirstOrDefault(collectible => collectible.Id == itemId);
+                    var itemName = item is null ? $"Unknown item ({itemId})" : item.Name;
+                    if (ImGui.Selectable($"{itemName}##hidden-item-{collectionName}-{itemId}"))
                     {
-                        ImGui.TextDisabled("No hidden items");
-                    }
-                    else
-                    {
-                        foreach (var (collectionName, itemIds) in hiddenItems)
+                        Services.Configuration.HiddenItems[collectionName].Remove(itemId);
+                        if (Services.Configuration.HiddenItems[collectionName].Count == 0)
                         {
-                            ImGui.TextDisabled(collectionName);
-                            if (!collections.TryGetValue(collectionName, out var collection))
-                            {
-                                continue;
-                            }
-
-                            foreach (var itemId in itemIds)
-                            {
-                                var item = collection.FirstOrDefault(collectible => collectible.Id == itemId);
-                                var itemName = item is null ? $"Unknown item ({itemId})" : item.Name;
-                                if (ImGui.Selectable($"{itemName}##hidden-item-{collectionName}-{itemId}"))
-                                {
-                                    Services.Configuration.HiddenItems[collectionName].Remove(itemId);
-                                    if (Services.Configuration.HiddenItems[collectionName].Count == 0)
-                                    {
-                                        Services.Configuration.HiddenItems.Remove(collectionName);
-                                    }
-                                    Services.Configuration.Save();
-                                }
-                            }
+                            Services.Configuration.HiddenItems.Remove(collectionName);
                         }
+                        Services.Configuration.Save();
                     }
-
-                    ImGui.EndChild();
                 }
             }
-
-            ImGui.EndChild();
         }
-
+        ImGui.EndChild();
     }
 
     public void OnOpen()
