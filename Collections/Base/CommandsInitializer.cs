@@ -27,6 +27,12 @@ public class CommandsInitializer
 
     private void OpenMainWindow(string command, string args)
     {
+        if (args.Trim().Equals("debug", StringComparison.OrdinalIgnoreCase))
+        {
+            Services.WindowsInitializer.DebugWindow.IsOpen = true;
+            return;
+        }
+
         Services.WindowsInitializer.MainWindow.IsOpen = true;
     }
 

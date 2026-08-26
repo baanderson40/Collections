@@ -9,6 +9,7 @@ public class SourcesDataGenerator
     public ContainersDataGenerator ContainersDataGenerator { get; private set; } = null!;
     public AchievementsDataGenerator AchievementsDataGenerator { get; private set; } = null!;
     public PvPSeriesDataGenerator PvPDataGenerator { get; private set; } = null!;
+    public FeastDataGenerator FeastDataGenerator { get; private set; } = null!;
     public QuestsDataGenerator QuestsDataGenerator { get; private set; } = null!;
     public CraftingDataGenerator CraftingDataGenerator { get; private set; } = null!;
     public TripleTriadNpcDataGenerator TripleTriadNpcDataGenerator { get; private set; } = null!;
@@ -30,6 +31,7 @@ public class SourcesDataGenerator
         var ContainersDataGeneratorTask = Task.Run(() => new ContainersDataGenerator());
         var AchievementsDataGeneratorTask = Task.Run(() => new AchievementsDataGenerator());
         var PvPDataGeneratorTask = Task.Run(() => new PvPSeriesDataGenerator());
+        var FeastDataGeneratorTask = Task.Run(() => new FeastDataGenerator());
         var CraftingDataGeneratorTask = Task.Run(() => new CraftingDataGenerator());
         var TripleTriadNpcDataGeneratorTask = Task.Run(() => new TripleTriadNpcDataGenerator());
         var TripleTriadNpcBattleDataGeneratorTask = Task.Run(() => new TripleTriadNpcBattleDataGenerator());
@@ -43,6 +45,7 @@ public class SourcesDataGenerator
         ContainersDataGenerator = await ContainersDataGeneratorTask;
         AchievementsDataGenerator = await AchievementsDataGeneratorTask;
         PvPDataGenerator = await PvPDataGeneratorTask;
+        FeastDataGenerator = await FeastDataGeneratorTask;
         CraftingDataGenerator = await CraftingDataGeneratorTask;
         TripleTriadNpcDataGenerator = await TripleTriadNpcDataGeneratorTask;
         TripleTriadNpcBattleDataGenerator = await TripleTriadNpcBattleDataGeneratorTask;

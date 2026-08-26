@@ -7,13 +7,16 @@ public class WindowsInitializer
 
     public WindowSystem WindowSystem { get; init; }
     public MainWindow MainWindow { get; init; }
+    public DebugWindow DebugWindow { get; init; }
 
     public WindowsInitializer()
     {
         // Attach windows
         MainWindow = new MainWindow();
+        DebugWindow = new DebugWindow();
         WindowSystem = new WindowSystem(Services.Plugin.NameSpace);
         WindowSystem.AddWindow(MainWindow);
+        WindowSystem.AddWindow(DebugWindow);
 
         // Attach draw functions
         Services.PluginInterface.UiBuilder.Draw += DrawUI;
@@ -35,5 +38,6 @@ public class WindowsInitializer
     {
         WindowSystem.RemoveAllWindows();
         MainWindow.Dispose();
+        DebugWindow.Dispose();
     }
 }
